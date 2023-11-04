@@ -12,6 +12,12 @@ public class Grapple : MonoBehaviour
     public float maxDistance = 100f;
     public SpringJoint joint;
     public Transform player;
+    public PlayerMovement pm;
+
+    void Start()
+    {
+        StopGrapple();
+    }
 
     void Update()
     {
@@ -32,6 +38,8 @@ public class Grapple : MonoBehaviour
 
     void StartGrapple()
     {
+        pm.grappling = true;
+
         RaycastHit hit;
         if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance)) 
         { 
@@ -48,17 +56,24 @@ public class Grapple : MonoBehaviour
             joint.spring = 4.5f;
             joint.damper = 7f;
             joint.massScale = 4.5f;
+
+            lr.positionCount = 2;
         }
     }
 
     void DrawRope()
     {
+        if (!joint) return;
+
         lr.SetPosition(0, gunTip.position);
         lr.SetPosition(1, grapplePoint);
     }
 
     void StopGrapple()
     {
+        pm.grappling = false;
 
+        lr.positionCount = 0;
+        Destroy(joint);
     }
 }

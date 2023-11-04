@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
+    public bool grappling;
+
+    public float grappleSpeed;
+
     public Transform orientation;
 
     float horizontalInput;
@@ -96,8 +100,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (flatVel.magnitude > moveSpeed)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            if (grappling)
+            {
+                Vector3 limitedVel = flatVel.normalized * grappleSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            } else
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
         }
     }
 }
