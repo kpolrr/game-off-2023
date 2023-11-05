@@ -13,6 +13,13 @@ public class Grapple : MonoBehaviour
     public SpringJoint joint;
     public Transform player;
     public PlayerMovement pm;
+    public Transform orientation;
+    public Rigidbody prb;
+
+    RaycastHit hit;
+
+    public float horizontalThrust;
+    public float forwardThrust;
 
     void Start()
     {
@@ -29,6 +36,19 @@ public class Grapple : MonoBehaviour
         {
             StopGrapple();
         }
+
+        if (joint != null)
+        {
+            AirMovement();
+        }
+    }
+
+    void AirMovement()
+    {
+        if (Input.GetKey(KeyCode.D)) prb.AddForce(orientation.right * horizontalThrust * Time.deltaTime);
+        if (Input.GetKey(KeyCode.A)) prb.AddForce(-orientation.right * horizontalThrust * Time.deltaTime);
+        if (Input.GetKey(KeyCode.W)) prb.AddForce(orientation.forward * forwardThrust * Time.deltaTime);
+        if (Input.GetKey("space")) prb.AddForce(-(transform.position - hit.point).normalized * forwardThrust * Time.deltaTime);
     }
 
     void LateUpdate()
@@ -40,8 +60,7 @@ public class Grapple : MonoBehaviour
     {
         pm.grappling = true;
 
-        RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance)) 
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGround)) 
         { 
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
