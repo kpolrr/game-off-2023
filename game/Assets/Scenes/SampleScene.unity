@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 1049460951}
   - component: {fileID: 1049460950}
   - component: {fileID: 1049460949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad35df606a81582488f003017617c3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 12
+  movementSpeed: 35
+  groundDrag: 5
+  jumpForce: 0
+  jumpCooldown: 0
+  playerHeight: 2
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
   orientation: {fileID: 768955974}
   rb: {fileID: 1076431367}
 --- !u!1 &1131036520
@@ -685,7 +692,7 @@ GameObject:
   - component: {fileID: 1177513343}
   - component: {fileID: 1177513342}
   - component: {fileID: 1177513341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
